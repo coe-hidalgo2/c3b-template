@@ -16,6 +16,8 @@
         // python
         "ms-python.python",
         // Docker
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        // Github
+        "github.vscode-github-actions"
     ]
 }

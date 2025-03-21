@@ -29,14 +29,28 @@ jobs:
         run: |
           ctest --preset default
 
+      - name: Package
+        run: |
+          cmake --build --preset default -t package_binary
+
+      - name: Upload tarball
+        uses: actions/upload-artifact@v4
+        if: matrix.runs-on == 'self-ubuntu-24.04'
+        with:
+          name: archive
+
 
   build-docker:
+    needs: build
     runs-on: ubuntu-latest
-    if: 0
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Dowload tarball
+        uses: actions/download-artifact@v4
+        with:
+          name: archive
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
