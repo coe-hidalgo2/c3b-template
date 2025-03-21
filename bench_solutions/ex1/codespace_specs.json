@@ -1,0 +1,8 @@
+{
+    "machine": "codespace_machine",
+    "targets":["my_partition:builtin:my_environment"],
+    "reframe_base_dir":"$PWD/reframe",
+    "reports_base_dir":"$PWD/reports",
+    "input_dataset_base_dir":"$PWD/examples",
+    "output_app_dir":"$PWD/outputs"
+}

@@ -1,0 +1,13 @@
+{
+    "machine": "karolina",
+    "targets":["qcpu:builtin:default"],
+    "execution_policy": "async",
+    "reframe_base_dir":"$PWD/reframe",
+    "reports_base_dir":"$PWD/reports/",
+    "input_dataset_base_dir":"$PWD/examples",
+    "output_app_dir":"$PWD/outputs",
+    "access":[
+        "--account=dd-24-88",
+        "--reservation=dd-24-88_2025-03-25T14:30:00_2025-03-25T17:00:00_40_qcpu"
+    ]
+}
