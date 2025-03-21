@@ -18,11 +18,6 @@ void fill_matrix_vector(std::vector<double>& matrix, std::vector<double>& vector
     for (double& x : vector) x = dist(gen);
 }
 
-void matrix_vector_mult(const std::vector<double>& local_matrix, const std::vector<double>& vector, 
-                        std::vector<double>& local_result, int rows_per_proc) {
-
-}
-
 
 int main(int argc, char** argv)
 {
