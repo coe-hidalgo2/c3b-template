@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ solution ]
+  pull_request:
+    branches: [ solution ]
+
+jobs:
+  build:
+    runs-on: self-ubuntu-24.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          cmake --preset default
+          cmake --build --preset default
+      
+      - name: Test
+        run: |
+          ctest --preset default
+
+
+  build-docker:
+    runs-on: ubuntu-latest
+    if: 0
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          push: false
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
+
+  build-apptainer:
+    runs-on: self-apptainer
+    needs: build-docker
+    if: 0
+    env:
+      APPTAINER: /opt/apptainer/v1.4.0/apptainer/bin/apptainer
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Convert Docker Image to Apptainer SIF
+        run: |
+          # Pull the Docker image and convert it to a Singularity Image Format (SIF) file.
+          ${{ env.apptainer }} pull hpc-mockup.sif docker://ghcr.io/${{ github.repository_owner }}/hpc-mockup:latest
+
+      - name: Upload Apptainer Image Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hpc-mockup-sif
+          path: hpc-mockup.sif
