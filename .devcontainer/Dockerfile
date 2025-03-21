@@ -19,5 +19,5 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && add-apt-repository -y ppa:apptainer/ppa \
     && apt-get update \
     && apt-get -y install --no-install-recommends \
-    apptainer \
+    apptainer-suid \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
