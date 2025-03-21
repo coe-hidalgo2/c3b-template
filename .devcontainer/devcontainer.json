@@ -6,8 +6,9 @@
         "terminal.integrated.shell.linux": "/bin/bash"
     },
     "extensions": [
-        // C++
+        // C++x
         "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
         "ms-vscode.cmake-tools",
         "ms-vscode.cmake-tools-helper",
         // yaml
