@@ -10,6 +10,10 @@ COPY . /workspaces/mpihelloworld
 
 WORKDIR /workspaces/mpihelloworld
 
+# ENV OMPI_MCA_btl_vader_single_copy_mechanism=none
+ENV OMPI_ALLOW_RUN_AS_ROOT=1
+ENV OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+
 RUN cmake --preset default \
     && cmake --build --preset default \
     && ctest --preset default \
