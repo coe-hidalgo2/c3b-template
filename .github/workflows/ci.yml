@@ -69,20 +69,25 @@ jobs:
   build-apptainer:
     runs-on: self-apptainer
     needs: build-docker
-    if: 0
     env:
-      APPTAINER: /opt/apptainer/v1.4.0/apptainer/bin/apptainer
+      apptainer: /opt/apptainer/v1.4.0/apptainer/bin/apptainer
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      -
+        name: Login to GitHub Container Registry
+        run: |
+          ${{ env.apptainer }} remote login  -u ${{ github.repository_owner }} -p ${{ secrets.GHCR_PAT }} oras://ghcr.io
+
       - name: Convert Docker Image to Apptainer SIF
         run: |
           # Pull the Docker image and convert it to a Singularity Image Format (SIF) file.
-          ${{ env.apptainer }} pull hpc-mockup.sif docker://ghcr.io/${{ github.repository_owner }}/hpc-mockup:latest
+          ${{ env.apptainer }} pull -F ${{ github.repository }}.sif docker://ghcr.io/${{ github.repository }}:solution
+          ${{ env.apptainer }} inspect ${{ github.repository }}.sif
 
-      - name: Upload Apptainer Image Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: hpc-mockup-sif
-          path: hpc-mockup.sif
+      - name: Upload Apptainer SIF to GitHub Container Registry
+        run: |
+          # Push the SIF file to the GitHub Container Registry.
+          ${{ env.apptainer }} push ${{ github.repository }}.sif oras://ghcr.io/${{ github.repository }}:solution-sif
+
