@@ -30,7 +30,18 @@
       {
         "name": "default",
         "configurePreset": "default",
-        "description": "Run the tests using the default configuration"
+        "output": {
+            "outputOnFailure": true
+        },
+        "execution": {
+            "jobs":1,
+            "noTestsAction": "error",
+            "stopOnFailure": false,
+            "repeat": {
+                "mode": "until-pass",
+                "count": 3
+            }
+        }
       }
     ]
   }
