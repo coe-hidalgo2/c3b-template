@@ -108,24 +108,9 @@ jobs:
         # Pull the SIF file from the GitHub Container Registry using the environment variable
         apptainer pull -F $SIF_FILENAME oras://ghcr.io/${{ github.repository }}:solution-sif
         apptainer inspect $SIF_FILENAME
-
-    - name: Run using Slurm
-      run: |
-        # Optionally re-read the SIF filename; otherwise, you could use $SIF_FILENAME directly
-        cat <<'EOF' > job.sh
-#!/bin/bash
-#SBATCH --job-name=apptainer
-#SBATCH --output=apptainer.out
-#SBATCH --error=apptainer.err
-#SBATCH --time=00:10:00
-#SBATCH --partition=qcpu
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=1G
-#SBATCH --account=dd-24-88
-
-module load apptainer/1.2.5
-apptainer run $SIF_FILENAME
-EOF
-        # Submit the job
-        sbatch job.sh
+#
+#    - name: Run using Slurm
+#      run: |
+#        # Optionally re-read the SIF filename; otherwise, you could use $SIF_FILENAME directly
+#        # Submit the job
+#        sbatch job.sh
