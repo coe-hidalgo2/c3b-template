@@ -97,21 +97,23 @@ jobs:
     runs-on: karolina
     needs: build-apptainer
     steps:
+    - name: Create sif filename
+      run: |
+        sif=$(basename "${{ github.repository }}.sif")
+        echo "SIF_FILENAME=$sif" >> $GITHUB_ENV
 
-      - name: Run Apptainer SIF
-        run: |
-          module load apptainer/1.2.5
-          sif=$( basename ${{ github.repository }}.sif )
-          # pull the SIF file from the GitHub Container Registry
-          apptainer pull -F $sif oras://ghcr.io/${{ github.repository }}:solution-sif
-          apptainer inspect $sif
+    - name: Run Apptainer SIF
+      run: |
+        module load apptainer/1.2.5
+        # Pull the SIF file from the GitHub Container Registry using the environment variable
+        apptainer pull -F $SIF_FILENAME oras://ghcr.io/${{ github.repository }}:solution-sif
+        apptainer inspect $SIF_FILENAME
 
-      - name: run using slurm
-        run: |
-          # create a job script
-          sif=$( basename ${{ github.repository }}.sif )
-          cat <<EOF > job.sh
-#! 
+    - name: Run using Slurm
+      run: |
+        # Optionally re-read the SIF filename; otherwise, you could use $SIF_FILENAME directly
+        cat <<'EOF' > job.sh
+#!/bin/bash
 #SBATCH --job-name=apptainer
 #SBATCH --output=apptainer.out
 #SBATCH --error=apptainer.err
@@ -122,9 +124,8 @@ jobs:
 #SBATCH --mem=1G
 #SBATCH --account=dd-24-88
 
-
 module load apptainer/1.2.5
-apptainer run $sif
+apptainer run $SIF_FILENAME
 EOF
-          # submit the job
-          sbatch job.sh
+        # Submit the job
+        sbatch job.sh
