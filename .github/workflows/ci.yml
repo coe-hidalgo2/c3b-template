@@ -93,3 +93,37 @@ jobs:
           sif = $( basename ${{ github.repository }}.sif )
           ${{ env.apptainer }} push $sif oras://ghcr.io/${{ github.repository }}:solution-sif
 
+  deploy-to-karolina:
+    runs-on: karolina
+    needs: build-apptainer
+    steps:
+
+      - name: Run Apptainer SIF
+        run: |
+          module load apptainer/1.2.5
+          sif = $( basename ${{ github.repository }}.sif )
+          # pull the SIF file from the GitHub Container Registry
+          apptainer pull -F $sif oras://ghcr.io/${{ github.repository }}:solution-sif
+          apptainer inspect $sif
+
+      - name: run using slurm
+        run: |
+          # create a job script
+          cat <<EOF > job.sh
+#! 
+#SBATCH --job-name=apptainer
+#SBATCH --output=apptainer.out
+#SBATCH --error=apptainer.err
+#SBATCH --time=00:10:00
+#SBATCH --partition=qcpu
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH --account=dd-24-88
+
+
+module load apptainer/1.2.5
+apptainer run $sif
+EOF
+          # submit the job
+          sbatch job.sh
