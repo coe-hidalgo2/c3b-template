@@ -83,11 +83,13 @@ jobs:
       - name: Convert Docker Image to Apptainer SIF
         run: |
           # Pull the Docker image and convert it to a Singularity Image Format (SIF) file.
-          ${{ env.apptainer }} pull -F ${{ github.repository }}.sif docker://ghcr.io/${{ github.repository }}:solution
-          ${{ env.apptainer }} inspect ${{ github.repository }}.sif
+          sif = $( basename ${{ github.repository }}.sif )
+          ${{ env.apptainer }} pull -F $sif docker://ghcr.io/${{ github.repository }}:solution
+          ${{ env.apptainer }} inspect $sif
 
       - name: Upload Apptainer SIF to GitHub Container Registry
         run: |
           # Push the SIF file to the GitHub Container Registry.
-          ${{ env.apptainer }} push ${{ github.repository }}.sif oras://ghcr.io/${{ github.repository }}:solution-sif
+          sif = $( basename ${{ github.repository }}.sif )
+          ${{ env.apptainer }} push $sif oras://ghcr.io/${{ github.repository }}:solution-sif
 
