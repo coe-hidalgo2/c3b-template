@@ -83,14 +83,14 @@ jobs:
       - name: Convert Docker Image to Apptainer SIF
         run: |
           # Pull the Docker image and convert it to a Singularity Image Format (SIF) file.
-          sif = $( basename ${{ github.repository }}.sif )
+          sif=$( basename ${{ github.repository }}.sif )
           ${{ env.apptainer }} pull -F $sif docker://ghcr.io/${{ github.repository }}:solution
           ${{ env.apptainer }} inspect $sif
 
       - name: Upload Apptainer SIF to GitHub Container Registry
         run: |
           # Push the SIF file to the GitHub Container Registry.
-          sif = $( basename ${{ github.repository }}.sif )
+          sif=$( basename ${{ github.repository }}.sif )
           ${{ env.apptainer }} push $sif oras://ghcr.io/${{ github.repository }}:solution-sif
 
   deploy-to-karolina:
@@ -101,7 +101,7 @@ jobs:
       - name: Run Apptainer SIF
         run: |
           module load apptainer/1.2.5
-          sif = $( basename ${{ github.repository }}.sif )
+          sif=$( basename ${{ github.repository }}.sif )
           # pull the SIF file from the GitHub Container Registry
           apptainer pull -F $sif oras://ghcr.io/${{ github.repository }}:solution-sif
           apptainer inspect $sif
@@ -109,6 +109,7 @@ jobs:
       - name: run using slurm
         run: |
           # create a job script
+          sif=$( basename ${{ github.repository }}.sif )
           cat <<EOF > job.sh
 #! 
 #SBATCH --job-name=apptainer
