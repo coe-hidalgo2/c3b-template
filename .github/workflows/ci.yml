@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        runs-on: [self-ubuntu-24.04, karolina]
+        runs-on: [ubuntu-latest,self-ubuntu-24.04, karolina]
     runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Checkout Repository
@@ -93,24 +93,7 @@ jobs:
           sif=$( basename ${{ github.repository }}.sif )
           ${{ env.apptainer }} push $sif oras://ghcr.io/${{ github.repository }}:solution-sif
 
-  deploy-to-karolina:
-    runs-on: karolina
-    needs: build-apptainer
-    steps:
-    - name: Create sif filename
-      run: |
-        sif=$(basename "${{ github.repository }}.sif")
-        echo "SIF_FILENAME=$sif" >> $GITHUB_ENV
-
-    - name: Run Apptainer SIF
-      run: |
-        module load apptainer/1.2.5
-        # Pull the SIF file from the GitHub Container Registry using the environment variable
-        apptainer pull -F $SIF_FILENAME oras://ghcr.io/${{ github.repository }}:solution-sif
-        apptainer inspect $SIF_FILENAME
-#
-#    - name: Run using Slurm
-#      run: |
-#        # Optionally re-read the SIF filename; otherwise, you could use $SIF_FILENAME directly
-#        # Submit the job
-#        sbatch job.sh
+      - name: Trigger deployment for image on self-ubuntu-24.04 and karolina
+        run: |
+          gh workflow run deploy.yml -f deploy -r ${{ github.repository }} -p matrix.runs-on=self-ubuntu-24.04
+          gh workflow run deploy.yml -f deploy -r ${{ github.repository }} -p matrix.runs-on=karolina
