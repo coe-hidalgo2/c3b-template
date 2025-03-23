@@ -18,20 +18,23 @@ jobs:
           sif=$(basename "${{ github.repository }}.sif")
           echo "SIF_FILENAME=$sif" >> $GITHUB_ENV
 
-      - name: PULL Apptainer SIF
+      - name: Set APPTAINER_CMD
         run: |
           if [ "${{ matrix.runs-on }}" == "karolina" ]; then
-            module load apptainer/1.2.5
-            apptainer_cmd=$(command -v apptainer)
+            apptainer_cmd=apptainer
           else 
             apptainer_cmd=/opt/apptainer/v1.4.0/apptainer/bin/apptainer
           fi  
           echo "Using apptainer command: $apptainer_cmd"
           # Save the command in the environment for subsequent steps
           echo "APPTAINER_CMD=$apptainer_cmd" >> $GITHUB_ENV
+
+      - name: PULL Apptainer SIF
+        run: |
           # Pull the SIF file from GHCR
-          $apptainer_cmd pull -F $SIF_FILENAME oras://ghcr.io/${{ github.repository }}:solution-sif
-          $apptainer_cmd inspect $SIF_FILENAME
+          $APPTAINER_CMD pull -F $SIF_FILENAME oras://ghcr.io/${{ github.repository }}:solution-sif
+          # inspect the SIF file
+          $APPTAINER_CMD inspect $SIF_FILENAME
 
       - name: Run Container on self-ubuntu-24.04
         if: matrix.runs-on == 'self-ubuntu-24.04'
