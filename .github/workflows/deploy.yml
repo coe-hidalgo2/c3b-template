@@ -9,10 +9,9 @@ jobs:
       matrix:
         runs-on: [self-ubuntu-24.04, karolina]
     runs-on: ${{ matrix.runs-on }}
-    needs: build-apptainer
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create sif filename
         run: |

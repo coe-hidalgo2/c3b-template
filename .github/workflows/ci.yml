@@ -95,6 +95,5 @@ jobs:
 
       - name: Trigger deployment for image on self-ubuntu-24.04 and karolina
         run: |
-          gh workflow run deploy.yml -f deploy -r solution -F matrix.runs-on=self-ubuntu-24.04
-          gh workflow run deploy.yml -f deploy -r solution -F matrix.runs-on=karolina
+          gh workflow run deploy.yml -r solution
 
