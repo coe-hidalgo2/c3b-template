@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: |
           if [ ${{ matrix.runs-on }} == 'karolina' ]; then
-            module load Boost/1.83.0-GCC-13.2.0 Ninja/1.12.1-GCCcore-13.3.0 OpenMPI/5.0.3-GCC-13.3.0  
+            module load Boost/1.83.0-GCC-13.2.0 Ninja/1.12.1-GCCcore-13.3.0 OpenMPI/4.1.6-GCC-13.2.0
           fi
           cmake --preset default
           cmake --build --preset default
