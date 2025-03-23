@@ -1,6 +1,6 @@
 # get sif filename from command line
 SIF=${1:-c3b-template.sif}
-
+WAIT=10
 # Submit the job and capture the sbatch output.
 job_output=$(sbatch job_myapp.sh $SIF)
 echo "sbatch output: $job_output"
@@ -9,8 +9,6 @@ echo "sbatch output: $job_output"
 jobid=$(echo "$job_output" | awk '{print $4}')
 echo "Submitted job with ID: $jobid"
 
-# Define terminal states to wait for.
-terminal_states=("COMPLETED" "FAILED" "CANCELLED" "TIMEOUT")
 job_state=""
 
 # Poll the job state using sacct until it reaches a terminal state.
@@ -18,13 +16,13 @@ while true; do
     job_state=$(sacct -j "$jobid" --format=State --noheader | head -n 1 | tr -d ' ')
     echo "Job $jobid state: $job_state"
     
-    # Check if the job state is one of the terminal states.
-    if [[ " ${terminal_states[@]} " =~ " ${job_state} " ]]; then
+    #Check if the job state starts with any terminal keyword.
+    if [[ "$job_state" == COMPLETED* || "$job_state" == FAILED* || "$job_state" == CANCELLED* || "$job_state" == TIMEOUT* ]]; then
         break
     fi
     
-    echo "Job $jobid is still running... waiting 30 seconds."
-    sleep 30
+    echo "Job $jobid is still running... waiting $WAIT seconds."
+    sleep $WAIT
 done
 
 echo "Job $jobid has finished with state: $job_state"

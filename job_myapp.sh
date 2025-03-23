@@ -4,7 +4,7 @@
 #SBATCH --error=apptainer.err
 #SBATCH --time=00:10:00
 #SBATCH --partition=qcpu
-#SBATCH --ntasks=128
+#SBATCH --ntasks=16
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=1G
 #SBATCH --account=dd-24-88
