@@ -33,13 +33,13 @@ jobs:
           $apptainer_cmd pull -F $SIF_FILENAME oras://ghcr.io/${{ github.repository }}:solution-sif
           $apptainer_cmd inspect $SIF_FILENAME
 
-      - name: Run Container
+      - name: Run Container on self-ubuntu-24.04
         if: matrix.runs-on == 'self-ubuntu-24.04'
         run: |
           # Run the SIF using the stored APPTAINER_CMD command and mpirun
-          mpirun -np 4 $APPTAINER_CMD run $SIF_FILENAME myapp
+          mpirun -np 4 $APPTAINER_CMD run --sharens $SIF_FILENAME myapp
 
-      - name: Run Container
+      - name: Run Container on Karolina
         if: matrix.runs-on == 'karolina'
         run: |
           bash job_monitor.sh $SIF_FILENAME
