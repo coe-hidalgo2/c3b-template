@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
 #        if: matrix.runs-on == 'self-ubuntu-24.04'
         with:
-          name: archive
+          name: archive-${{ matrix.runs-on }}
           path: |
             build/default/*.tar.gz
 
