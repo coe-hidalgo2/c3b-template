@@ -8,20 +8,23 @@ This repository serves as the template used by GitHub Classroom to generate pers
 == Overview
 
 The **c3b-template** repository is designed to:
-- Provide every trainee with an identical, reproducible development setup.
-- Facilitate hands-on exercises in MPI application development.
-- Include essential software such as:
-  - Ubuntu 24.04 as the base environment
-  - MPI libraries (e.g., OpenMPI)
-  - CMake, Ninja, and G++ for building applications
-  - Python3 and associated development tools
-  - Boost libraries for testing and serialization
+
+* Provide every trainee with an identical, reproducible development setup.
+* Facilitate hands-on exercises in MPI application development.
+* Include essential software such as:
+** Ubuntu 24.04 as the base environment
+** MPI libraries (e.g., OpenMPI)
+** CMake, Ninja, and G++ for building applications
+** Python3 and associated development tools
+** Boost libraries for testing and serialization
 
 == Getting Started
 
 === For Trainees  
 
-When you accept an assignment via GitHub Classroom, a personalized repository is created based on this template. Then:
+When you accept an assignment via GitHub Classroom, a personalized repository is created based on this template. 
+Then:
+
 1. **Open Your Codespace:**  
    Click the **Code** button in your repository and choose **Open with Codespaces**. Your development environment will be automatically set up with all required tools.
 2. **Compile and Test the Code:**  
@@ -29,12 +32,9 @@ When you accept an assignment via GitHub Classroom, a personalized repository is
 
 === For Instructors
 
-- **Uniform Environment:**  
-  Use this template to ensure all trainees receive a consistent environment.
-- **Customization:**  
-  Modify the repository as needed to include additional examples or exercises tailored to your training session.
-- **Integration:**  
-  GitHub Classroom automates repository creation from this template, simplifying distribution and management.
+Uniform Environment::  Use this template to ensure all trainees receive a consistent environment.
+Customization::  Modify the repository as needed to include additional examples or exercises tailored to your training session.
+Integration:: GitHub Classroom automates repository creation from this template, simplifying distribution and management.
 
 == Building and Testing the Code
 
@@ -80,6 +80,3 @@ Contributions are welcome! Please fork the repository, make your changes, and su
 
 This repository is licensed under the BSD License. See the [LICENSE](LICENSE) file for details.
 
-== Conclusion
-
-The **c3b-template** repository provides a robust, pre-configured development environment for HPC training sessions. By leveraging GitHub Classroom and Codespaces, every trainee starts from a consistent baseline, allowing the focus to remain on learning MPI application development and testing.
