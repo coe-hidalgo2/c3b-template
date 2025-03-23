@@ -67,10 +67,10 @@ The testing framework integrated in this repository ensures that the MPI applica
 
 == Additional Resources
 
-- [GitHub Classroom Documentation](https://classroom.github.com/)
-- [GitHub Codespaces Documentation](https://docs.github.com/en/codespaces)
-- [CMake Presets Documentation](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)
-- [OpenMPI Documentation](https://www.open-mpi.org/)
+- https://classroom.github.com/[GitHub Classroom Documentation]
+- https://docs.github.com/en/codespaces[GitHub Codespaces Documentation]
+- https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html[CMake Presets Documentation]
+- https://www.open-mpi.org/[OpenMPI Documentation]
 
 == Contributing
 
@@ -78,5 +78,5 @@ Contributions are welcome! Please fork the repository, make your changes, and su
 
 == License
 
-This repository is licensed under the BSD License. See the [LICENSE](LICENSE) file for details.
+This repository is licensed under the BSD License. See the link:LICENSE[LICENSE] file for details.
 
