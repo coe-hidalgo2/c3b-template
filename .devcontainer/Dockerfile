@@ -10,5 +10,3 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     libboost-test-dev libboost-serialization-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-#COPY install-docker.sh /tmp/install-docker.sh
-#RUN bash /tmp/install-docker.sh

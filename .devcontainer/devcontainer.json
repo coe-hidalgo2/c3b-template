@@ -67,7 +67,7 @@
                 "ms-azuretools.vscode-docker",
                 // Github
                 "github.vscode-github-actions"
-        ]
+            ]
+        }
     }
-}
 }

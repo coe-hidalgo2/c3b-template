@@ -43,4 +43,3 @@ set(CPACK_IGNORE_FILES "/build/;/.git/;/.gitignore;/.gitmodules;/.gitlab-ci.yml;
 set(CPACK_GENERATOR "TGZ;ZIP")
 include(CPack)
 
-
