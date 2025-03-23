@@ -18,4 +18,5 @@ RUN cmake --preset default \
     && cmake --build --preset default \
     && ctest --preset default \
     && cmake --build --preset default -t install \
+    && rm -rf build
 
