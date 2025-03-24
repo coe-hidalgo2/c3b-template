@@ -22,6 +22,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(ut)
 
 add_subdirectory(myapp)
+add_subdirectory(examples)
 enable_testing()
 add_subdirectory(tests)
 
